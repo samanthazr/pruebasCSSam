@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid2';
 import { styled } from '@mui/material/styles';
 import ArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-import RacquetsLogo from '../components/RacquetsLogo/RacquetsLogo.svg'
+import RacquetsLogo from '../components/RacquetsLogo/RacquetS 25 LogoHorizontal_FondoMorado.png'
 import ig from '../assets/instagram.svg'
 import fb from '../assets/facebook.svg'
 import lkdn from '../assets/linkedin.svg'
@@ -11,7 +11,10 @@ import '../App.css'
 
 function Copyright(props: TypographyProps) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography
+      // variant="body2"
+      className='ItemCenter'
+      color="text.secondary" align="center" {...props}>
       <Link color="inherit" sx={{textDecoration: 'none'}} href="https://racquetsappsuite.com/">
         Racquets! AppSuite&trade;
       </Link>{' '}
@@ -30,14 +33,14 @@ const FooterWrapper = styled(Box)(
 
 function Footer() {
   return (
-    <FooterWrapper sx={{ backgroundColor: "#3C1C91", paddingTop:'10px'}}>
+    <FooterWrapper sx={{ backgroundColor: "#3C1C91", paddingTop:'25px'}}>
       <Container maxWidth="lg">
         <Box>
-          <p className='ItemCenter'>Follow us on our social networks to keep up with all our updates!</p>
+          <Typography className='ItemCenter'>Follow us on our social networks to keep up with all our updates!</Typography>
         </Box>
         <Grid
           container direction="row" justifyContent="center" alignItems="center" spacing={10}
-          sx={{ flexGrow: 1, height: '110px' }}
+          sx={{ flexGrow: 1, height: '30px' }}
         >
           <Grid component="div">
             <Link href="https://www.instagram.com/racquetsappsuitetm/" target="_blank">
@@ -63,18 +66,17 @@ function Footer() {
           alignItems="center"
           textAlign={{ xs: 'center', md: 'left' }}
           justifyContent="space-between"
-          marginTop= {'5px'}
         >
           <Typography sx={{ pt: { xs: 2, mt: 1, color: "#ffff" } }} variant="subtitle1">
             <Link href="https://racquetsappsuite" target="_blank" rel="noopener noreferrer">
-              <img src={RacquetsLogo} style={{height:'60px'}} alt="RacquetsApp Suite logo" />
+              <img src={RacquetsLogo} style={{height:'70px'}} alt="RacquetsApp Suite logo" />
             </Link>
           </Typography>
-          <Copyright sx={{ mt: 8, mb: 4, color: "#FFF"}} />
+          <Copyright sx={{ mt: 5, mb: 4,  color: "#FFF"}}/>
           <Button
             startIcon={<ArrowUpIcon />}
             sx={{
-              height:'40px', margin: 7, p:'1em',
+              height:'40px', margin: 2, p:'1em',
               border: 'solid 0.07em #FFFFFF',
               color: 'white',
               fontWeight: 'bold', borderRadius: '6px', textTransform: 'none',
