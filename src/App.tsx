@@ -6,8 +6,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LandingPage from './views/LandingPage';
-// import Login from './views/Login';
-// import bck from './assets/backgrounds'
+import Login from './views/Login';
+
 const lightTheme = createTheme({
   palette: {
     mode: 'light',
@@ -47,7 +47,7 @@ function App() {
             <Navbar/>
             <Routes>
               <Route path="/" element={<LandingPage />} />
-              {/* <Route path="/login" element={<Login />} /> */}
+              <Route path="/login" element={<Login />} />
             </Routes>
             <Footer/>
           </Router>

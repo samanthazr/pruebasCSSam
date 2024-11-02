@@ -1,22 +1,27 @@
 import * as React from 'react';
 import GetawaysLogo from './GetawaysLogo/GetawaysLogo.png';
+// import RcnetIcon from '../assets/RappsIcons/RCnet icon.png';
+import playerIcon from '../assets/RappsIcons/PlayersProfile.png';
 
-// import { NavLink,
+import {
+  Link as RouterLink,
   // useNavigate
-// } from 'react-router-dom';
+} from 'react-router-dom';
 import {
   AppBar, Container, Box, Typography,
-  Button, IconButton, Menu, MenuItem
+  Button, IconButton, Menu, MenuItem,
+  Toolbar, Tooltip
 } from '@mui/material';
-
-import Toolbar from '@mui/material/Toolbar';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
+import '../App.css';
+// import Toolbar from '@mui/material/Toolbar';import Avatar from '@mui/material/Avatar';
+// import Tooltip from '@mui/material/Tooltip';
 import MenuIcon from '@mui/icons-material/Menu';
 const pages = ['Login',
   // 'Sign up'
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = [
+  // 'Profile', 'Account', 'Dashboard',
+  'Logout'];
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -43,10 +48,9 @@ function NavBar() {
 
   return (
     //CustomAppBar
-    <AppBar sx={{ backgroundColor: "#3C1C91"}}>
+    <AppBar sx={{ backgroundColor: "#3C1C91" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-
           {/* logo large */}
           <Typography
             variant="h6" component="a" noWrap href="/"
@@ -106,22 +110,25 @@ function NavBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  {/* <NavLink to={`/${page}`} className="nav-link active text-white" aria-current="page"> */}
-                    <Typography textAlign="center"
-                      // href='{`/${page}`}'
-                    >{page}</Typography>
-                  {/* </NavLink> */}
-                  </MenuItem>
+                  <Button to={`/${page}`}
+                    component={RouterLink}
+                    aria-current="page"
+                    sx={{ textTransform: 'none' }}
+                  >
+                    {page}
+                  </Button>
+                </MenuItem>
               ))}
             </Menu>
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                component={RouterLink}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block',
-                fontWeight: 'bold', textTransform: 'none' }}
+                key={page} to={`/${page}`}
+                aria-current="page" size="large"
+                sx={{ my: 2, color: 'white', display: 'block', fontWeight: 'bold', textTransform: 'none' }}
               >
                 {page}
               </Button>
@@ -131,9 +138,8 @@ function NavBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp"
-                // src="/static/images/avatar/2.jpg"
-                />
+                {/* <img src={RcnetIcon} style={{height:'1.8em'}} className="logo" alt="Getaways logo" /> */}
+                <img src={playerIcon} style={{height:'2.4em'}} className="logo" alt="Getaways logo" />
               </IconButton>
             </Tooltip>
             <Menu
