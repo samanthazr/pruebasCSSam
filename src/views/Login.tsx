@@ -1,30 +1,57 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Box, Container, Typography, TextField, Button,
-  // Link
-} from '@mui/material';
+import { Box, Container, Typography, TextField, Button } from '@mui/material';
 import Grid from '@mui/material/Grid2';
+import AppleIcon from '@mui/icons-material/Apple';
+import ShopIcon from '@mui/icons-material/Shop';
 import '../index.css';
 import '../App.css';
 
-// TODO remove, this demo shouldn't need to reset the theme.
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
 const defaultTheme = createTheme();
 
-export default function Login() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+// Define validation schema using yup
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .required('Email is required')
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+      'Invalid email address'
+    ),
+  password: yup
+    .string()
+    .min(6, 'Password must be at least 6 characters')
+    .required('Password is required'),
+});
+
+// Define interface for form input
+interface LoginInput {
+  email: string;
+  password: string;
+}
+
+const Login: React.FC = () => {
+  const { control, handleSubmit, formState: { errors } } = useForm<LoginInput>({
+    resolver: yupResolver(schema),
+  });
+
+  const navigate = useNavigate();
+
+  const onSubmit = (data: LoginInput) => {
+    console.log(data);
+    navigate('/getaways');
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <div className="background-container"></div>
-      <Container component="main" maxWidth="xs" style={{ position: 'relative'}}>
+      <Container component="main" maxWidth="xs" style={{ position: 'relative' }}>
         <CssBaseline />
         <Box
           sx={{
@@ -38,36 +65,54 @@ export default function Login() {
           <Typography component="h1" variant="h5" sx={{ color: '#C9F305', fontWeight: 'bold' }}>
             Log in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ m: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email | Use your Racquets!™ account"
+          <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ m: 1 }}>
+            <Controller
               name="email"
-              autoComplete="email"
-              autoFocus
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email | Use your Racquets!™ account"
+                  autoComplete="email"
+                  autoFocus
+                  error={!!errors.email}
+                  helperText={errors.email ? errors.email.message : ''}
+                />
+              )}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
+            <Controller
               name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  error={!!errors.password}
+                  helperText={errors.password ? errors.password.message : ''}
+                />
+              )}
             />
             <Button
               className="greenBtn"
-              fullWidth
-              variant="contained"
+              variant="contained" fullWidth
               type="submit"
               sx={{
                 mt: 3, mb: 5, borderRadius: '8px', padding: '5px 15px', margin: '5 5px',
-                bgcolor: '#3C1C91', color: '#FFF', fontWeight: 'bold', 
-                // textTransform: 'none',
+                bgcolor: '#3C1C91', color: '#FFF', fontWeight: 'bold',
+                textTransform: 'none',
                 ':hover': { bgcolor: 'white', color: '#3C1C91' }
                }}
             >
@@ -83,7 +128,9 @@ export default function Login() {
             >
               <Grid>
                 <Typography
-                  sx={{ color: '#fff', textDecoration: 'none' }}>
+                  sx={{
+                    // color: '#fff',
+                    textDecoration: 'none' }}>
                   Don't have a Racquets! AppSuite™ account?
                 </Typography>
               </Grid>
@@ -93,26 +140,28 @@ export default function Login() {
               >
                 <Grid>
                   <Button
+                    startIcon={<ShopIcon />}
                     variant="contained"
                     target="_blank"
                     href="https://play.google.com/store/apps/details?id=com.terracomsortium.tapps&hl=es_CO"
                     sx={{
                       mt: 3, mb: 5, borderRadius: '8px', padding: '5px 15px', margin: '5 5px',
-                      bgcolor: '#3C1C91', color: '#FFF', fontWeight: 'bold', 
+                      bgcolor: '#3C1C91', color: '#FFF', fontWeight: 'bold',
                       textTransform: 'none',
                       ':hover': { bgcolor: 'white', color: '#3C1C91' }
                      }}
                   >
-                    Google play store
+                    Google store
                   </Button>
                 </Grid>
                 <Grid>
                   <Button
+                    startIcon={<AppleIcon />}
                     variant="contained" target="_blank"
                     href="https://apps.apple.com/co/app/racquetsappsuite/id1592585843"
                     sx={{
                       mt: 3, mb: 5, borderRadius: '8px', padding: '5px 15px', margin: '5 5px',
-                      bgcolor: '#3C1C91', color: '#FFF', fontWeight: 'bold', 
+                      bgcolor: '#3C1C91', color: '#FFF', fontWeight: 'bold',
                       textTransform: 'none',
                       ':hover': { bgcolor: 'white', color: '#3C1C91' }
                     }}
@@ -128,3 +177,5 @@ export default function Login() {
     </ThemeProvider>
   );
 }
+
+export default Login;
