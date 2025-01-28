@@ -44,6 +44,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data: LoginInput) => {
+    console.log("datos que se tiene en el formulario");
     console.log(data);
     navigate('/getaways');
   };
@@ -65,6 +66,7 @@ const Login: React.FC = () => {
           <Typography component="h1" variant="h5" sx={{ color: '#C9F305', fontWeight: 'bold' }}>
             Log in
           </Typography>
+
           <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ m: 1 }}>
             <Controller
               name="email"
@@ -85,6 +87,7 @@ const Login: React.FC = () => {
                 />
               )}
             />
+
             <Controller
               name="password"
               control={control}
@@ -105,6 +108,7 @@ const Login: React.FC = () => {
                 />
               )}
             />
+
             <Button
               className="greenBtn"
               variant="contained" fullWidth
@@ -115,9 +119,11 @@ const Login: React.FC = () => {
                 textTransform: 'none',
                 ':hover': { bgcolor: 'white', color: '#3C1C91' }
                }}
+               
             >
               Log In
             </Button>
+
             <Grid container
               sx={{
                 marginTop: 2,
