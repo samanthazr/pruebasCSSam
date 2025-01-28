@@ -13,6 +13,9 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import { login } from '../services/auth/auth';
+import { useAuth } from '../context/AuthContext';
+
 const defaultTheme = createTheme();
 
 // Define validation schema using yup
@@ -37,16 +40,27 @@ interface LoginInput {
 }
 
 const Login: React.FC = () => {
+  const { login: authLogin } = useAuth();
   const { control, handleSubmit, formState: { errors } } = useForm<LoginInput>({
     resolver: yupResolver(schema),
   });
 
   const navigate = useNavigate();
 
-  const onSubmit = (data: LoginInput) => {
-    console.log("datos que se tiene en el formulario");
-    console.log(data);
-    navigate('/getaways');
+  const onSubmit = async (data: LoginInput) => {
+    console.log("datos capturados ");
+    console.log( data );
+    const {email, password} = data;
+    try {
+      const token = await login(email, password);
+      authLogin(token);
+    } catch (error) {
+      console.error("credenciales incorrectas");
+      // setError('credenciales incorrectas');
+    }
+    // console.log("datos que se tiene en el formulario");
+    // console.log(data);
+    // navigate('/getaways');
   };
 
   return (

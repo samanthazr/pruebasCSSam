@@ -2,11 +2,12 @@ import './App.css'
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LandingPage from './views/LandingPage';
 import Login from './views/Login';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
 const lightTheme = createTheme({
   palette: {
@@ -41,6 +42,7 @@ const lightTheme = createTheme({
 function App() {
   return (
     <>
+    <AuthProvider>
       <ThemeProvider theme={lightTheme}>
         <CssBaseline />
         <Router>
@@ -52,8 +54,17 @@ function App() {
             <Footer/>
           </Router>
       </ThemeProvider>
+    </AuthProvider>
     </>
   )
+}
+
+const privateRoute: React.FC<{ children: React.ReactElement }> = ({ children }) => {
+  const { token } = useAuth();
+  if(!token) {
+    return <Navigate to="/login" />
+  }
+  return children;
 }
 
 export default App
