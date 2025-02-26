@@ -2,12 +2,15 @@ import './App.css'
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import { Provider } from 'react-redux';
+
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LandingPage from './views/LandingPage';
 import Login from './views/Login';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { store } from './store/store';
+// import { AuthProvider, useAuth } from './context/AuthContext';
 
 const lightTheme = createTheme({
   palette: {
@@ -42,7 +45,8 @@ const lightTheme = createTheme({
 function App() {
   return (
     <>
-    <AuthProvider>
+    {/* <AuthProvider> */}
+    <Provider store={ store }>
       <ThemeProvider theme={lightTheme}>
         <CssBaseline />
         <Router>
@@ -54,17 +58,18 @@ function App() {
             <Footer/>
           </Router>
       </ThemeProvider>
-    </AuthProvider>
+    {/* </AuthProvider> */}
+    </Provider>
     </>
   )
 }
 
-const privateRoute: React.FC<{ children: React.ReactElement }> = ({ children }) => {
-  const { token } = useAuth();
-  if(!token) {
-    return <Navigate to="/login" />
-  }
-  return children;
-}
+// const privateRoute: React.FC<{ children: React.ReactElement }> = ({ children }) => {
+//   const { token } = useAuth();
+//   if(!token) {
+//     return <Navigate to="/login" />
+//   }
+//   return children;
+// }
 
 export default App
