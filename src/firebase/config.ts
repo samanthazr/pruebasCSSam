@@ -13,6 +13,7 @@ const firebaseConfig = {
   storageBucket: "react-cursos-4368a.appspot.com",
   messagingSenderId: "35683178704",
   appId: "1:35683178704:web:2cab2003319bbac2eba6d5"
+  // measurementId: "G-6JJG36TM2W"
 };
 
 // Initialize Firebase
