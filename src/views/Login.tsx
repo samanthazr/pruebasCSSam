@@ -13,7 +13,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { login } from '../service/firebase/auth';
+import { login } from '../services/auth/auth';
 import { useAuth } from '../context/AuthContext';
 
 const defaultTheme = createTheme();

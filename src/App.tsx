@@ -10,7 +10,7 @@ import Footer from './components/Footer';
 import LandingPage from './views/LandingPage';
 import Login from './views/Login';
 import { store } from './store/store';
-// import { AuthProvider, useAuth } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
 const lightTheme = createTheme({
   palette: {
@@ -45,7 +45,7 @@ const lightTheme = createTheme({
 function App() {
   return (
     <>
-    {/* <AuthProvider> */}
+    <AuthProvider>
     <Provider store={ store }>
       <ThemeProvider theme={lightTheme}>
         <CssBaseline />
@@ -58,18 +58,18 @@ function App() {
             <Footer/>
           </Router>
       </ThemeProvider>
-    {/* </AuthProvider> */}
     </Provider>
+    </AuthProvider>
     </>
   )
 }
 
-// const privateRoute: React.FC<{ children: React.ReactElement }> = ({ children }) => {
-//   const { token } = useAuth();
-//   if(!token) {
-//     return <Navigate to="/login" />
-//   }
-//   return children;
-// }
+const privateRoute: React.FC<{ children: React.ReactElement }> = ({ children }) => {
+  const { token } = useAuth();
+  if(!token) {
+    return <Navigate to="/login" />
+  }
+  return children;
+}
 
 export default App
