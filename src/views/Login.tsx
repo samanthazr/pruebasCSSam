@@ -53,14 +53,17 @@ const Login: React.FC = () => {
     const {email, password} = data;
     try {
       const token = await login(email, password);
-      authLogin(token);
+      if(token){
+        authLogin(token);
+        navigate('/getaways');
+      }
     } catch (error) {
       console.error("credenciales incorrectas");
       // setError('credenciales incorrectas');
     }
     // console.log("datos que se tiene en el formulario");
     // console.log(data);
-    // navigate('/getaways');
+    
   };
 
   return (
